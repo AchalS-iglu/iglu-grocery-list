@@ -1,8 +1,8 @@
 import AddToDo from "@/components/AddToDo";
+import { pocketBaseApp } from "@/lib/models/PocketBase/app";
 import React from "react";
 
 const Home = ({ user }: { user: string }) => {
-  console.log(user)
   return (
     <>
       <div className="container w-full max-w-2xl">

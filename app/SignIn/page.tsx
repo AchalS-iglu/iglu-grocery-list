@@ -1,6 +1,6 @@
 'use client';
-import { pocketBaseApp } from "@/models/PocketBase/app";
-import { loginWithUserPass } from "@/models/PocketBase/auth";
+import { pocketBaseApp } from "@/lib/models/PocketBase/app";
+import { loginWithUserPass } from "@/lib/models/PocketBase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -20,9 +20,9 @@ const SignIn = () => {
     password: "",
   })
 
-  if (pocketBaseApp.authStore.isValid) {
-    router.push('/')
-  }
+  // if (pocketBaseApp.authStore.isValid) {
+  //   router.push('/')
+  // }
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,8 +30,7 @@ const SignIn = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    loginWithUserPass(form.email_username, form.password)
-    router.push("/");
+    return loginWithUserPass(form.email_username, form.password)
   };
 
   return (

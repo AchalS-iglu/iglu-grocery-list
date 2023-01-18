@@ -1,6 +1,6 @@
 'use client';
-import { registerUser } from "@/models/PocketBase/auth";
-import { newUser_t } from "@/models/user";
+import { registerUser } from "@/lib/models/PocketBase/auth";
+import { newUser_t } from "@/lib/models/user";
 import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { BsGoogle } from "react-icons/bs";

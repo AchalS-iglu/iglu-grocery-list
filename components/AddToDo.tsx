@@ -1,6 +1,6 @@
 'use client';
 
-import { ToDo_t } from "@/models/todo";
+import { ToDo_t } from "@/lib/models/todo";
 import React, { useState } from "react";
 
 const AddToDo = ({user_id}: {user_id: string}) => {

@@ -1,9 +1,11 @@
-'use client';
+"use client";
 
-import { ToDo_t } from "@/lib/models/todo";
+import { createToDo, ToDo_t } from "@/lib/models/todo";
 import React, { useState } from "react";
+import { uuidv4 } from "@firebase/util";
+import { toast } from "react-hot-toast";
 
-const AddToDo = ({user_id}: {user_id: string}) => {
+const AddToDo = ({ user_id }: { user_id: string }) => {
   const [form, setForm] = useState<ToDo_t>({
     id: "",
     desc: "",
@@ -13,8 +15,23 @@ const AddToDo = ({user_id}: {user_id: string}) => {
     user_id: user_id,
   });
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (form.desc.length < 3) {
+      toast.error("Please enter a valid todo");
+    } else {
+      toast.promise(createToDo({ ...form, id: uuidv4() }), {
+        loading: "Adding...",
+        success: <b>Todo added!</b>,
+        error: <b>Could not add.</b>,
+      });
+      setForm({ ...form, id: "", desc: "" });
+      // toast.success("ToDo Successfully Created")
+    }
+  };
+
   return (
-    <form onSubmit={(e) => {console.log(form)}} className="flex justify-center ">
+    <form onSubmit={handleSubmit} className="flex justify-center ">
       <input
         type="text"
         name="todo"

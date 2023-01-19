@@ -1,5 +1,5 @@
 'use client';
-import { registerUser } from "@/lib/models/PocketBase/auth";
+import { registerUser } from "@/lib/Firebase/auth";
 import { newUser_t } from "@/lib/models/user";
 import { redirect } from "next/navigation";
 import React, { useState } from "react";
@@ -19,7 +19,7 @@ const SignIn = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    registerUser(form);
+    registerUser(form.email, form.password);
     redirect("/SignIn");
   };
 
@@ -39,21 +39,10 @@ const SignIn = () => {
                 <input
                   type="text"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  placeholder="Email address/Username"
+                  placeholder="Email"
                   value={form.email}
                   onChange={handleChange}
                   name="email"
-                />
-              </div>
-
-              <div className="mb-6">
-                <input
-                  type="text"
-                  className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  placeholder="Username"
-                  value={form.username}
-                  onChange={handleChange}
-                  name="username"
                 />
               </div>
 

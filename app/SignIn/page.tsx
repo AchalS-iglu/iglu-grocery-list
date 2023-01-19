@@ -1,36 +1,39 @@
-'use client';
-import { pocketBaseApp } from "@/lib/models/PocketBase/app";
-import { loginWithUserPass } from "@/lib/models/PocketBase/auth";
+"use client";
+import { auth } from "@/lib/Firebase/app";
+import { googleSignIn, signIn } from "@/lib/Firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import { BsGoogle } from "react-icons/bs";
 
 type SignIn_t = {
   email_username: string;
   password: string;
-}
+};
 
-const SignIn = () => {  
+const SignIn = () => {
   const router = useRouter();
+
+  const [user, loading] = useAuthState(auth);
 
   const [form, setForm] = useState<SignIn_t>({
     email_username: "",
     password: "",
-  })
+  });
 
-  // if (pocketBaseApp.authStore.isValid) {
-  //   router.push('/')
-  // }
-  
+  if (user) {
+    router.push('/')
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    return loginWithUserPass(form.email_username, form.password)
+    return signIn(form.email_username, form.password);
   };
 
   return (
@@ -105,7 +108,7 @@ const SignIn = () => {
                 className="inline-block text-center px-7 py-3 bg-orange-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-orange-200 hover:text-orange-900 hover:shadow-lg focus:bg-orange-200 focus:text-orange-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-orange-200 active:text-orange-900 active:shadow-lg transition duration-150 ease-in-out w-full"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                href={'/Register'}
+                href={"/Register"}
               >
                 Create a New Account
               </Link>
@@ -119,6 +122,7 @@ const SignIn = () => {
                 role="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
+                onClick={googleSignIn}
               >
                 <BsGoogle className="w-3.5 h-3.5 mr-2" />
                 Continue with Google

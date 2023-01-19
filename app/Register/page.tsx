@@ -1,5 +1,5 @@
-'use client';
-import { handleSignOut, registerUser } from "@/lib/Firebase/auth";
+"use client";
+import { googleSignIn, handleSignOut, registerUser } from "@/lib/Firebase/auth";
 import { newUser_t } from "@/lib/models/user";
 import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -24,9 +24,9 @@ const SignIn = () => {
     toast.promise(registerUser(form.email, form.password), {
       loading: "Creating your account...",
       success: "Account created! Redirecting...",
-      error: "Couldn't create account"
-    })
-    handleSignOut()
+      error: "Couldn't create account",
+    });
+    handleSignOut();
     router.push("/SignIn");
   };
 
@@ -94,6 +94,14 @@ const SignIn = () => {
                 role="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
+                onClick={() => {
+                  toast.promise(googleSignIn(), {
+                    loading: "Signing in with Google...",
+                    success: "Signed in!",
+                    error: "Error signing in",
+                  });
+                  router.push("/");
+                }}
               >
                 <BsGoogle className="w-3.5 h-3.5 mr-2" />
                 Continue with Google

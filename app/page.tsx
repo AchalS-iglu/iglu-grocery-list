@@ -2,7 +2,6 @@
 import AddToDo from "@/components/AddToDo";
 import ToDoList from "@/components/ToDoList";
 import ToDoStats from "@/components/ToDoStats";
-import TopBar from "@/components/TopBar";
 import { auth } from "@/lib/Firebase/app";
 import { handleSignOut } from "@/lib/Firebase/auth";
 import { UserContext } from "@/lib/Firebase/context";
@@ -10,7 +9,7 @@ import { getTodos, ToDo_t } from "@/lib/models/todo";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 const Home = () => {
   const [user, loading] = useAuthState(auth);
@@ -61,7 +60,13 @@ const Home = () => {
               </div>
               <button
                 className="px-3 py-2 bg-orange-500 text-white rounded-md shadow-md  hover:bg-orange-200 hover:text-orange-900 hover:shadow-lg focus:bg-orange-200 focus:text-orange-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-orange-200 active:text-orange-900 active:shadow-lg transition duration-150 ease-in-out"
-                onClick={handleSignOut}
+                onClick={() => {
+                  toast.promise(handleSignOut(), {
+                    loading: "Signing out...",
+                    success: "Signed out!",
+                    error: "Error signing out",
+                })
+              router.push('/SignIn')}}
               >
                 Sign Out
               </button>

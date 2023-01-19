@@ -25,7 +25,7 @@ const SignIn = () => {
   });
 
   if (user) {
-    router.push('/')
+    router.push("/");
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +37,7 @@ const SignIn = () => {
     toast.promise(signIn(form.email_username, form.password), {
       loading: "Signing in...",
       success: "Signed in! Redirecting...",
-      error: "Couldn't sign in"
+      error: "Couldn't sign in",
     });
     router.push("/");
   };
@@ -129,7 +129,14 @@ const SignIn = () => {
                 role="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                onClick={googleSignIn}
+                onClick={() => {
+                  toast.promise(googleSignIn(), {
+                    loading: "Signing in with Google...",
+                    success: "Signed in!",
+                    error: "Error signing in",
+                  });
+                  router.push("/");
+                }}
               >
                 <BsGoogle className="w-3.5 h-3.5 mr-2" />
                 Continue with Google

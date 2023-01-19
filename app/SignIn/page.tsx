@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Toaster } from "react-hot-toast";
 
 import { BsGoogle } from "react-icons/bs";
 
@@ -38,6 +39,7 @@ const SignIn = () => {
 
   return (
     <section className="flex h-screen justify-center items-center">
+      <Toaster />
       <div className="container px-6 py-12 h-full">
         <div className="flex justify-center items-center flex-wrap h-full text-gray-800">
           <div className="">

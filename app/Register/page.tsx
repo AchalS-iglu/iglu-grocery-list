@@ -1,11 +1,13 @@
 'use client';
-import { registerUser } from "@/lib/Firebase/auth";
+import { handleSignOut, registerUser } from "@/lib/Firebase/auth";
 import { newUser_t } from "@/lib/models/user";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
 import { BsGoogle } from "react-icons/bs";
 
 const SignIn = () => {
+  const router = useRouter();
   const [form, setForm] = useState<newUser_t>({
     email: "",
     username: "",
@@ -19,12 +21,18 @@ const SignIn = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    registerUser(form.email, form.password);
-    redirect("/SignIn");
+    toast.promise(registerUser(form.email, form.password), {
+      loading: "Creating your account...",
+      success: "Account created! Redirecting...",
+      error: "Couldn't create account"
+    })
+    handleSignOut()
+    router.push("/SignIn");
   };
 
   return (
     <section className="flex h-screen justify-center items-center">
+      <Toaster />
       <div className="container px-6 py-12 h-full">
         <div className="flex justify-center items-center flex-wrap h-full text-gray-800">
           <div className="">

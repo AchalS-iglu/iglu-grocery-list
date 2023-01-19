@@ -19,8 +19,12 @@ const ToDoItem = ({ todo, index }: { todo: ToDo_t; index: number }) => {
         {todo.completed === false ? (
           <button
             onClick={() => {
-              toggleTodo(todo);
-              toast.success("Todo marked as completed!");
+              toast.promise(toggleTodo(todo), {
+                loading: "Updating...",
+                success: <b>Todo marked as completed!</b>,
+                error: <b>Could not update.</b>,
+              });
+              // toast.success("Todo marked as completed!");
             }}
             className="text-orange-600"
           >
@@ -45,8 +49,12 @@ const ToDoItem = ({ todo, index }: { todo: ToDo_t; index: number }) => {
         {todo.completed === true ? (
           <button
             onClick={() => {
-              toggleTodo(todo);
-              toast.error("Todo marked as incomplete!");
+              toast.promise(toggleTodo(todo), {
+                loading: "Updating...",
+                success: <b>Todo marked as incomplete!</b>,
+                error: <b>Could not update.</b>,
+              });
+              // toast.error("Todo marked as incomplete!");
             }}
             className="text-orange-600"
           >
@@ -70,8 +78,12 @@ const ToDoItem = ({ todo, index }: { todo: ToDo_t; index: number }) => {
         )}
         <button
           onClick={() => {
-            deleteTodo(todo);
-            toast.error("Todo deleted!");
+            toast.promise(deleteTodo(todo), {
+                loading: "Deleting...",
+                success: <b>Todo deleted!</b>,
+                error: <b>Could not delete.</b>,
+              });
+            // toast.error("Todo deleted!");
           }}
           className="text-orange-600"
         >

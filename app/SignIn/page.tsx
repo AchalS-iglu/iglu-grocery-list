@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 import { BsGoogle } from "react-icons/bs";
 
@@ -34,7 +34,12 @@ const SignIn = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    return signIn(form.email_username, form.password);
+    toast.promise(signIn(form.email_username, form.password), {
+      loading: "Signing in...",
+      success: "Signed in! Redirecting...",
+      error: "Couldn't sign in"
+    });
+    router.push("/");
   };
 
   return (
